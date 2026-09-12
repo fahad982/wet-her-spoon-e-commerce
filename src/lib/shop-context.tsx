@@ -135,9 +135,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
         const i = cart.findIndex(
           (l) => l.productId === line.productId && l.size === line.size && l.color === line.color,
         );
-        if (i >= 0) {
+        const existing = i >= 0 ? cart[i] : undefined;
+        if (existing) {
           const next = [...cart];
-          next[i] = { ...next[i], quantity: next[i].quantity + line.quantity };
+          next[i] = { ...existing, quantity: existing.quantity + line.quantity };
           persistCart(next);
         } else {
           persistCart([...cart, line]);
