@@ -5,11 +5,11 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { fetchCategories, fetchProducts, SIZES, type Product } from "@/lib/shop-data";
 
 type ShopSearch = {
-  category?: string;
-  size?: string;
-  color?: string;
-  max?: number;
-  sort?: "new" | "price-asc" | "price-desc";
+  category?: string | undefined;
+  size?: string | undefined;
+  color?: string | undefined;
+  max?: number | undefined;
+  sort?: "new" | "price-asc" | "price-desc" | undefined;
 };
 
 export const Route = createFileRoute("/shop")({
