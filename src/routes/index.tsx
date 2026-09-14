@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ProductCard } from "@/components/site/ProductCard";
 import { fetchProducts } from "@/lib/shop-data";
-import heroAsset from "@/assets/hero.jpg";
+const heroAsset = "/__l5e/assets-v1/c77eb22e-8188-4ce4-9b86-7a6e523d9c8e/hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
