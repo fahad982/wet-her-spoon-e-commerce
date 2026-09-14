@@ -58,7 +58,10 @@ function ProductPage() {
   const completeLook = related.filter((p) => !youMayLike.includes(p)).slice(0, 4);
 
   const handleAdd = () => {
-    if (!size || !activeColor) return toast.error("Choose a size first");
+    if (!size || !activeColor) {
+      toast.error("Choose a size first");
+      return;
+    }
     addToCart({
       productId: product.id,
       slug: product.slug,
@@ -73,7 +76,10 @@ function ProductPage() {
   };
 
   const handleWishlist = async () => {
-    if (!session) return toast.error("Sign in to save pieces");
+    if (!session) {
+      toast.error("Sign in to save pieces");
+      return;
+    }
     const { error } = await supabase
       .from("wishlist_items")
       .insert({ user_id: session.user.id, product_id: product.id });
@@ -84,7 +90,10 @@ function ProductPage() {
   const handleNotify = async () => {
     if (!selected) return;
     const email = notifyEmail || session?.user.email || "";
-    if (!email) return toast.error("Enter your email");
+    if (!email) {
+      toast.error("Enter your email");
+      return;
+    }
     const { error } = await supabase.from("notify_requests").insert({
       variant_id: selected.id,
       email,
