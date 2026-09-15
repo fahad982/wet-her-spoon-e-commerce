@@ -256,15 +256,21 @@ function ProductsTab({
     }
   };
 
-  const upload = async (file: File) => {
+  const upload = async (file: File): Promise<void> => {
     if (!draft) return;
     const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "-")}`;
     const { error } = await supabase.storage.from("product-images").upload(path, file);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     const { data } = await supabase.storage
       .from("product-images")
       .createSignedUrl(path, 60 * 60 * 24 * 365 * 5);
-    if (!data?.signedUrl) return toast.error("Photo uploaded but could not be linked");
+    if (!data?.signedUrl) {
+      toast.error("Photo uploaded but could not be linked");
+      return;
+    }
     setDraft({ ...draft, images: [draft.images, data.signedUrl].filter(Boolean).join("\n") });
     toast.success("Photo added");
   };
