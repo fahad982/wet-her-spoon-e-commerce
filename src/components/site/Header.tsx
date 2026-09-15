@@ -16,8 +16,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 px-4 py-4 md:px-8">
-        <div className="flex min-w-0 items-center gap-6">
+      <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-4 py-4 sm:gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:px-8">
+        <div className="flex min-w-0 shrink-0 items-center gap-6">
           <button
             aria-label="Menu"
             className="md:hidden"
@@ -40,11 +40,13 @@ export function Header() {
           </nav>
         </div>
 
-        <Link to="/" className="shrink-0 text-center">
-          <span className="font-display text-xl tracking-[0.22em] md:text-2xl">WET HER SPOON</span>
+        <Link to="/" className="min-w-0 text-center">
+          <span className="font-display block truncate text-[0.95rem] tracking-[0.14em] sm:text-xl sm:tracking-[0.22em] md:text-2xl">
+            WET HER SPOON
+          </span>
         </Link>
 
-        <div className="flex min-w-0 items-center justify-end gap-4">
+        <div className="flex shrink-0 items-center justify-end gap-3 sm:gap-4">
           <select
             aria-label="Currency"
             value={currency}
