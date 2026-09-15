@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ProductCard } from "@/components/site/ProductCard";
 import { fetchProducts } from "@/lib/shop-data";
-const heroAsset = "/__l5e/assets-v1/c77eb22e-8188-4ce4-9b86-7a6e523d9c8e/hero.jpg";
+import heroAsset from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,10 +34,12 @@ function Index() {
         <img
           src={heroAsset}
           alt="Model wearing a Wet Her Spoon dress"
-          className="h-[70vh] w-full object-cover md:h-[86vh]"
+          fetchPriority="high"
+          className="h-[62vh] w-full object-cover object-top sm:h-[72vh] md:h-[86vh]"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-end gap-5 pb-14 text-center">
-          <h1 className="font-display text-4xl tracking-[0.14em] text-white drop-shadow md:text-6xl">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 px-4 pb-10 text-center md:gap-5 md:pb-14">
+          <h1 className="font-display text-[1.75rem] leading-tight tracking-[0.12em] text-white drop-shadow-lg sm:text-4xl md:text-6xl">
             THE DRESS EDIT
           </h1>
           <Link to="/shop" search={{}} className="btn-solid bg-white text-black">
