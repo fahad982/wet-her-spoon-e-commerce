@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/site/ProductCard";
 import { formatMoney, useShop } from "@/lib/shop-context";
-import { fetchIsAdmin, type Product } from "@/lib/shop-data";
+import { type Product } from "@/lib/shop-data";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -71,12 +71,6 @@ function AccountPage() {
     }
   }, [profile]);
 
-  const { data: isAdmin = false } = useQuery({
-    queryKey: ["is-admin", userId],
-    enabled: !!userId,
-    queryFn: () => fetchIsAdmin(userId),
-  });
-
   const { data: wishlist = [] } = useQuery({
     queryKey: ["wishlist", userId],
     enabled: !!userId,
@@ -126,11 +120,6 @@ function AccountPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl tracking-[0.1em]">My account</h1>
         <div className="flex items-center gap-4">
-          {isAdmin && (
-            <Link to="/admin" className="label-xs underline underline-offset-4">
-              Owner dashboard
-            </Link>
-          )}
           <button
             type="button"
             className="label-xs underline underline-offset-4"

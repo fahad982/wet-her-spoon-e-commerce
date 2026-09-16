@@ -17,9 +17,9 @@ import {
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Owner dashboard — WET HER SPOON" },
+      { title: "Admin — WET HER SPOON" },
       { name: "description", content: "Manage products, stock and customer orders for Wet Her Spoon." },
-      { property: "og:title", content: "Owner dashboard — WET HER SPOON" },
+      { property: "og:title", content: "Admin — WET HER SPOON" },
       { property: "og:description", content: "Manage products, stock and orders." },
       { name: "robots", content: "noindex" },
     ],
@@ -82,7 +82,7 @@ function AdminPage() {
   if (!isAdmin) {
     return (
       <div className="mx-auto max-w-md px-4 py-24 text-center md:px-8">
-        <h1 className="text-2xl tracking-[0.1em]">Owner access only</h1>
+        <h1 className="text-2xl tracking-[0.1em]">Admin access only</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           This area is for the shop owner. If this is your shop and no owner has been set up yet,
           claim it below.
@@ -110,7 +110,7 @@ function AdminPage() {
 
   return (
     <div className="px-4 py-10 md:px-8">
-      <h1 className="text-2xl tracking-[0.1em]">Owner dashboard</h1>
+      <h1 className="text-2xl tracking-[0.1em]">Admin</h1>
       <div className="mt-6 flex gap-6 border-b border-border">
         {(["products", "orders"] as const).map((t) => (
           <button
