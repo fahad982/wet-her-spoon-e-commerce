@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Reveal } from "@/components/site/Reveal";
 import { fetchProducts } from "@/lib/shop-data";
 import heroAsset from "@/assets/hero.jpg";
 
@@ -49,15 +50,17 @@ function Index() {
       </section>
 
       <section className="px-4 py-16 md:px-8">
-        <div className="mb-8 flex items-end justify-between">
+        <Reveal className="mb-8 flex items-end justify-between">
           <h2 className="text-2xl tracking-[0.1em]">New arrivals</h2>
           <Link to="/shop" search={{}} className="label-xs underline underline-offset-4">
             View all
           </Link>
-        </div>
+        </Reveal>
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
-          {featured.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {featured.map((p, i) => (
+            <Reveal key={p.id} delay={i * 80}>
+              <ProductCard product={p} />
+            </Reveal>
           ))}
         </div>
       </section>
@@ -67,15 +70,16 @@ function Index() {
           { label: "Dresses", slug: "dresses" },
           { label: "Occasion", slug: "occasion" },
           { label: "Sale", slug: "sale" },
-        ].map((c) => (
-          <Link
-            key={c.slug}
-            to="/shop"
-            search={{ category: c.slug }}
-            className="flex h-48 items-center justify-center bg-background transition-colors hover:bg-secondary"
-          >
-            <span className="label-xs">{c.label}</span>
-          </Link>
+        ].map((c, i) => (
+          <Reveal key={c.slug} delay={i * 100}>
+            <Link
+              to="/shop"
+              search={{ category: c.slug }}
+              className="flex h-48 items-center justify-center bg-background transition-colors hover:bg-secondary"
+            >
+              <span className="label-xs">{c.label}</span>
+            </Link>
+          </Reveal>
         ))}
       </section>
     </div>
