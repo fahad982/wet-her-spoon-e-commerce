@@ -17,9 +17,9 @@ import {
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Owner dashboard — WET HER SPOON" },
+      { title: "Admin — WET HER SPOON" },
       { name: "description", content: "Manage products, stock and customer orders for Wet Her Spoon." },
-      { property: "og:title", content: "Owner dashboard — WET HER SPOON" },
+      { property: "og:title", content: "Admin — WET HER SPOON" },
       { property: "og:description", content: "Manage products, stock and orders." },
       { name: "robots", content: "noindex" },
     ],
