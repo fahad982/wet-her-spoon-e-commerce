@@ -110,7 +110,7 @@ function AdminPage() {
 
   return (
     <div className="px-4 py-10 md:px-8">
-      <h1 className="text-2xl tracking-[0.1em]">Owner dashboard</h1>
+      <h1 className="text-2xl tracking-[0.1em]">Admin</h1>
       <div className="mt-6 flex gap-6 border-b border-border">
         {(["products", "orders"] as const).map((t) => (
           <button
