@@ -45,6 +45,14 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="label-xs text-foreground/80 transition-colors hover:text-foreground"
+              >
+                Dashboard
+              </Link>
+            )}
           </nav>
         </div>
 
@@ -95,6 +103,11 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link to="/admin" onClick={() => setOpen(false)} className="label-xs">
+              Dashboard
+            </Link>
+          )}
         </nav>
       )}
     </header>
