@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/site/ProductCard";
 import { formatMoney, useShop } from "@/lib/shop-context";
-import { fetchIsAdmin, type Product } from "@/lib/shop-data";
+import { type Product } from "@/lib/shop-data";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -70,12 +70,6 @@ function AccountPage() {
       setPhone(profile.phone ?? "");
     }
   }, [profile]);
-
-  const { data: isAdmin = false } = useQuery({
-    queryKey: ["is-admin", userId],
-    enabled: !!userId,
-    queryFn: () => fetchIsAdmin(userId),
-  });
 
   const { data: wishlist = [] } = useQuery({
     queryKey: ["wishlist", userId],
