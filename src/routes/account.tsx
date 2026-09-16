@@ -126,11 +126,6 @@ function AccountPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl tracking-[0.1em]">My account</h1>
         <div className="flex items-center gap-4">
-          {isAdmin && (
-            <Link to="/admin" className="label-xs underline underline-offset-4">
-              Owner dashboard
-            </Link>
-          )}
           <button
             type="button"
             className="label-xs underline underline-offset-4"
