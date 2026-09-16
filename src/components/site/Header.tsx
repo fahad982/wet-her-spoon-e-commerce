@@ -1,18 +1,69 @@
-import { Link } from "@tanstack/react-router";
-import { Heart, Menu, ShoppingBag, User, X } from "lucide-react";
-import { useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { CURRENCIES, useShop, type CurrencyCode } from "@/lib/shop-context";
+import { fetchProducts } from "@/lib/shop-data";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 const NAV = [
+  { label: "Home", to: "/", search: {} },
   { label: "New In", to: "/shop", search: { category: "new-in" } },
   { label: "Dresses", to: "/shop", search: { category: "dresses" } },
   { label: "Occasion", to: "/shop", search: { category: "occasion" } },
   { label: "Sale", to: "/shop", search: { category: "sale" } },
-];
+  { label: "Category", to: "/shop", search: {} },
+  { label: "About", to: "/about", search: {} },
+  { label: "Reviews", to: "/reviews", search: {} },
+  { label: "FAQ", to: "/faq", search: {} },
+  { label: "Journal", to: "/journal", search: {} },
+] as const;
 
 export function Header() {
   const { cartCount, currency, setCurrency, session } = useShop();
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const { data: products = [] } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+    enabled: searchOpen,
+  });
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return products
+      .filter((p) => p.is_published && (p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)))
+      .slice(0, 8);
+  }, [products, query]);
+
+  // Cmd/Ctrl+K opens search, matching the shortcut convention this component supports.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  function goToProduct(slug: string) {
+    setSearchOpen(false);
+    setQuery("");
+    navigate({ to: "/product/$slug", params: { slug } });
+  }
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
@@ -47,6 +98,9 @@ export function Header() {
         </Link>
 
         <div className="flex shrink-0 items-center justify-end gap-3 sm:gap-4">
+          <button aria-label="Search" type="button" onClick={() => setSearchOpen(true)}>
+            <Search className="h-5 w-5" />
+          </button>
           <select
             aria-label="Currency"
             value={currency}
@@ -89,6 +143,22 @@ export function Header() {
           ))}
         </nav>
       )}
+
+      <CommandDialog open={searchOpen} onOpenChange={setSearchOpen}>
+        <CommandInput placeholder="Search dresses…" value={query} onValueChange={setQuery} />
+        <CommandList>
+          {query.trim() && results.length === 0 && <CommandEmpty>No dresses found.</CommandEmpty>}
+          {results.length > 0 && (
+            <CommandGroup heading="Dresses">
+              {results.map((p) => (
+                <CommandItem key={p.id} value={p.name} onSelect={() => goToProduct(p.slug)}>
+                  {p.name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
+        </CommandList>
+      </CommandDialog>
     </header>
   );
 }
