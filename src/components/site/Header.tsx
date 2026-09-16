@@ -16,17 +16,17 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-      <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-4 py-4 sm:gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:px-8">
+      <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-4 py-4 sm:gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:px-8">
         <div className="flex min-w-0 shrink-0 items-center gap-6">
           <button
             aria-label="Menu"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setOpen((v) => !v)}
             type="button"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {NAV.map((item) => (
               <Link
                 key={item.label}
@@ -75,7 +75,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-4 border-t border-border px-4 py-5 md:hidden">
+        <nav className="flex flex-col gap-4 border-t border-border px-4 py-5 lg:hidden">
           {NAV.map((item) => (
             <Link
               key={item.label}
