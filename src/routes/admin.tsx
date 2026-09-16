@@ -82,7 +82,7 @@ function AdminPage() {
   if (!isAdmin) {
     return (
       <div className="mx-auto max-w-md px-4 py-24 text-center md:px-8">
-        <h1 className="text-2xl tracking-[0.1em]">Owner access only</h1>
+        <h1 className="text-2xl tracking-[0.1em]">Admin access only</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           This area is for the shop owner. If this is your shop and no owner has been set up yet,
           claim it below.
