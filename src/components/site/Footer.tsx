@@ -33,6 +33,9 @@ export function Footer() {
           <a href="mailto:hello@wetherspoon.shop" className="text-sm">
             Contact us
           </a>
+          <Link to="/admin" className="text-sm">
+            Admin
+          </Link>
         </div>
       </div>
       <p className="label-xs mt-12 text-muted-foreground">
