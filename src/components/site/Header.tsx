@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Menu, ShoppingBag, User, X } from "lucide-react";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { CURRENCIES, useShop, type CurrencyCode } from "@/lib/shop-context";
+import { fetchIsAdmin } from "@/lib/shop-data";
 
 const NAV = [
   { label: "New In", to: "/shop", search: { category: "new-in" } },
@@ -11,8 +13,14 @@ const NAV = [
 ];
 
 export function Header() {
-  const { cartCount, currency, setCurrency } = useShop();
+  const { cartCount, currency, setCurrency, session } = useShop();
   const [open, setOpen] = useState(false);
+  const userId = session?.user.id;
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is-admin", userId],
+    enabled: !!userId,
+    queryFn: () => fetchIsAdmin(userId),
+  });
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
