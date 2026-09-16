@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Reveal } from "@/components/site/Reveal";
 import { fetchCategories, fetchProducts, SIZES, type Product } from "@/lib/shop-data";
 
 type ShopSearch = {
@@ -156,8 +157,10 @@ function Shop() {
         <p className="mt-10 text-sm text-muted-foreground">No pieces match these filters.</p>
       ) : (
         <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
-          {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {filtered.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 4) * 80}>
+              <ProductCard product={p} />
+            </Reveal>
           ))}
         </div>
       )}
