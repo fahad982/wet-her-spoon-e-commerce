@@ -28,6 +28,7 @@ function AuthPage() {
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("NG");
   const [busy, setBusy] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   useEffect(() => {
     if (session) navigate({ to: "/account" });
@@ -70,6 +71,26 @@ function AuthPage() {
       options: { redirectTo: `${window.location.origin}/account` },
     });
     if (error) toast.error(error.message);
+  };
+
+  const sendPasswordReset = async () => {
+    if (!email) {
+      toast.error("Enter your email address first");
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      setResetSent(true);
+      toast.success("Password reset link sent — check your email");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not send reset email");
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -132,6 +153,16 @@ function AuthPage() {
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
+        {mode === "signin" && (
+          <button
+            type="button"
+            onClick={sendPasswordReset}
+            disabled={busy}
+            className="label-xs -mt-2 text-left text-muted-foreground underline underline-offset-4"
+          >
+            {resetSent ? "Reset link sent — check your email" : "Forgot password?"}
+          </button>
+        )}
         <button type="submit" className="btn-solid w-full" disabled={busy}>
           {mode === "signin" ? "Sign in" : "Create account"}
         </button>

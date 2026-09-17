@@ -18,6 +18,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as JournalRouteImport } from './routes/journal'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as WishlistRouteImport } from './routes/wishlist'
@@ -68,6 +69,11 @@ const JournalRoute = JournalRouteImport.update({
   path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/faq': typeof FaqRoute
   '/journal': typeof JournalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/reviews': typeof ReviewsRoute
   '/shop': typeof ShopRoute
   '/wishlist': typeof WishlistRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/faq': typeof FaqRoute
   '/journal': typeof JournalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/reviews': typeof ReviewsRoute
   '/shop': typeof ShopRoute
   '/wishlist': typeof WishlistRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/faq': typeof FaqRoute
   '/journal': typeof JournalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/reviews': typeof ReviewsRoute
   '/shop': typeof ShopRoute
   '/wishlist': typeof WishlistRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/faq'
     | '/journal'
+    | '/reset-password'
     | '/reviews'
     | '/shop'
     | '/wishlist'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/faq'
     | '/journal'
+    | '/reset-password'
     | '/reviews'
     | '/shop'
     | '/wishlist'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/faq'
     | '/journal'
+    | '/reset-password'
     | '/reviews'
     | '/shop'
     | '/wishlist'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   FaqRoute: typeof FaqRoute
   JournalRoute: typeof JournalRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ReviewsRoute: typeof ReviewsRoute
   ShopRoute: typeof ShopRoute
   WishlistRoute: typeof WishlistRoute
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   FaqRoute: FaqRoute,
   JournalRoute: JournalRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ReviewsRoute: ReviewsRoute,
   ShopRoute: ShopRoute,
   WishlistRoute: WishlistRoute,
