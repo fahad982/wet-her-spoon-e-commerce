@@ -120,7 +120,7 @@ export function Header() {
         </div>
 
         <Link to="/" className="min-w-0 text-center">
-          <img src={logo} alt="Wet Her Spoon" className="mx-auto h-10 w-auto object-contain sm:h-12" />
+          <img src={logo} alt="Wet Her Spoon" className="mx-auto h-12 w-auto object-contain sm:h-14 md:h-16" />
         </Link>
 
         <div className="flex shrink-0 items-center justify-end gap-3 sm:gap-4">

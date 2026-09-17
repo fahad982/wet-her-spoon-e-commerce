@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-border px-4 py-14 md:px-8">
       <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr]">
         <div>
-          <img src={logo} alt="Wet Her Spoon" className="h-9 w-auto object-contain" />
+          <img src={logo} alt="Wet Her Spoon" className="h-12 w-auto object-contain" />
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             Dresses, made to be worn everywhere. Shipped worldwide.
           </p>
