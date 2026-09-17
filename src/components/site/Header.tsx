@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CURRENCIES, useShop, type CurrencyCode } from "@/lib/shop-context";
 import { fetchProducts } from "@/lib/shop-data";
+import logo from "@/assets/logo.png";
 import {
   CommandDialog,
   CommandEmpty,
@@ -119,9 +120,7 @@ export function Header() {
         </div>
 
         <Link to="/" className="min-w-0 text-center">
-          <span className="font-display block truncate text-[0.95rem] tracking-[0.14em] sm:text-xl sm:tracking-[0.22em] md:text-2xl">
-            WET HER SPOON
-          </span>
+          <img src={logo} alt="Wet Her Spoon" className="mx-auto h-10 w-auto object-contain sm:h-12" />
         </Link>
 
         <div className="flex shrink-0 items-center justify-end gap-3 sm:gap-4">
