@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { ChevronDown, Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CURRENCIES, useShop, type CurrencyCode } from "@/lib/shop-context";
@@ -12,19 +12,32 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const NAV = [
+// Kept small on desktop so it doesn't clash with the centered wordmark —
+// everything else lives in the "More" dropdown next to it.
+const PRIMARY_NAV = [
   { label: "Home", to: "/", search: {} },
-  { label: "New In", to: "/shop", search: { category: "new-in" } },
-  { label: "Dresses", to: "/shop", search: { category: "dresses" } },
-  { label: "Occasion", to: "/shop", search: { category: "occasion" } },
   { label: "Sale", to: "/shop", search: { category: "sale" } },
   { label: "Category", to: "/shop", search: {} },
   { label: "About", to: "/about", search: {} },
+] as const;
+
+const MORE_NAV = [
+  { label: "New In", to: "/shop", search: { category: "new-in" } },
+  { label: "Dresses", to: "/shop", search: { category: "dresses" } },
+  { label: "Occasion", to: "/shop", search: { category: "occasion" } },
   { label: "Reviews", to: "/reviews", search: {} },
   { label: "FAQ", to: "/faq", search: {} },
   { label: "Journal", to: "/journal", search: {} },
 ] as const;
+
+const ALL_NAV = [...PRIMARY_NAV, ...MORE_NAV];
 
 export function Header() {
   const { cartCount, currency, setCurrency, session } = useShop();
@@ -78,7 +91,7 @@ export function Header() {
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
           <nav className="hidden items-center gap-6 lg:flex">
-            {NAV.map((item) => (
+            {PRIMARY_NAV.map((item) => (
               <Link
                 key={item.label}
                 to={item.to}
@@ -88,6 +101,20 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="label-xs flex items-center gap-1 text-foreground/80 transition-colors hover:text-foreground">
+                More <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {MORE_NAV.map((item) => (
+                  <DropdownMenuItem key={item.label} asChild>
+                    <Link to={item.to} search={item.search}>
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
 
@@ -130,7 +157,7 @@ export function Header() {
 
       {open && (
         <nav className="flex flex-col gap-4 border-t border-border px-4 py-5 lg:hidden">
-          {NAV.map((item) => (
+          {ALL_NAV.map((item) => (
             <Link
               key={item.label}
               to={item.to}
