@@ -336,6 +336,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_owner_role: {
+        Args: Record<PropertyKey, never>
+        Returns: { granted: boolean; reason: string | null }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
