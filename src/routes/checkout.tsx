@@ -84,38 +84,28 @@ function CheckoutPage() {
     }
     setBusy(true);
     try {
-      const { data: order, error } = await supabase
-        .from("orders")
-        .insert({
-          user_id: session.user.id,
-          email,
-          phone,
-          country: countryCode,
-          currency,
-          fx_rate: CURRENCIES[currency].rate,
-          shipping_address: { full_name: fullName, line1, city, postcode, country: countryCode },
-          subtotal,
-          shipping,
-          total,
-          status: "pending",
-        })
-        .select("id")
-        .single();
-      if (error) throw error;
-
-      const { error: itemsError } = await supabase.from("order_items").insert(
-        cart.map((l) => ({
-          order_id: order.id,
-          product_id: l.productId,
-          product_name: l.name,
+      const { data: orderId, error } = await supabase.rpc("place_order", {
+        _email: email,
+        _phone: phone,
+        _country: countryCode,
+        _currency: currency,
+        _fx_rate: CURRENCIES[currency].rate,
+        _shipping_address: { full_name: fullName, line1, city, postcode, country: countryCode },
+        _subtotal: subtotal,
+        _shipping: shipping,
+        _total: total,
+        _items: cart.map((l) => ({
+          productId: l.productId,
+          name: l.name,
           image: l.image,
           size: l.size,
           color: l.color,
           quantity: l.quantity,
-          unit_price: l.price,
+          price: l.price,
         })),
-      );
-      if (itemsError) throw itemsError;
+      });
+      if (error) throw error;
+      void orderId;
 
       clearCart();
       toast.success("Order placed. We'll email you payment details shortly.");

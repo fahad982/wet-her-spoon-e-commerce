@@ -336,6 +336,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      place_order: {
+        Args: {
+          _email: string; _phone: string; _country: string; _currency: string; _fx_rate: number;
+          _shipping_address: Json; _subtotal: number; _shipping: number; _total: number; _items: Json;
+        }
+        Returns: string
+      }
       claim_owner_role: {
         Args: Record<PropertyKey, never>
         Returns: { granted: boolean; reason: string | null }[]
